@@ -22,11 +22,22 @@ const registerFormRules = reactive<FormRules>({
   username: [
     {
       required: true,
-      message: "Pseudo obligatoire"
+      message: "Pseudo obligatoire",
+      pattern: userNameRegex
     }
   ],
-  password: [],
-  passwordConfirmation: []
+  password: [
+    {
+      required: true,
+      message: "Mot de passe obligatoire"
+    }
+  ],
+  passwordConfirmation: [
+    {
+      required: true,
+      message: "Confirmation du mot de passe obligatoire"
+    }
+  ]
 });
 
 async function onSubmit(form?: FormInstance) {
@@ -39,29 +50,41 @@ async function onSubmit(form?: FormInstance) {
   } catch (e) {
     return;
   }
+
+  if (registerModel.password == registerModel.passwordConfirmation) {
+    if (await userApi.exists(registerModel.username)) {
+      ElMessage({
+        showClose: true,
+        message: 'Ce compte existe déjà',
+        type: 'error',
+        duration: 2000
+      })
+      return;
+    }
+    userApi.register(registerModel)
+    router.push('/login')
+  } else {
+    return;
+  }
 }
 </script>
 <template>
   <div class="register center-children full-h">
     <main class="width-s">
       <h1 class="register-title">Créer un compte</h1>
-
       <div class="register-form">
-        <el-form
-          ref="form"
-          :model="registerModel"
-          :rules="registerFormRules"
-          label-position="top"
-          class="register-form"
-          @submit.prevent="onSubmit($refs.form)"
-        >
+        <el-form ref="form" :model="registerModel" :rules="registerFormRules" label-position="top" class="register-form"
+          @submit.prevent="onSubmit($refs.form)">
           <el-form-item label="Pseudo" prop="username">
             <el-input v-model="registerModel.username" />
           </el-form-item>
 
-          <el-form-item label="Mot de passe" prop="password"> </el-form-item>
+          <el-form-item label="Mot de passe" prop="password">
+            <el-input v-model="registerModel.password" />
+          </el-form-item>
 
           <el-form-item label="Confirmez votre mot de passe" prop="passwordConfirmation">
+            <el-input v-model="registerModel.passwordConfirmation" />
           </el-form-item>
 
           <el-form-item>

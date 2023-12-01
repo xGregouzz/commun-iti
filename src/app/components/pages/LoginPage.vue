@@ -18,10 +18,10 @@ const userNameRegex = /^(\w+)$/i;
 
 const loginFormRules = reactive<FormRules>({
   username: [
-  
+
   ],
   password: [
-  
+
   ]
 });
 
@@ -44,14 +44,8 @@ async function onSubmit(form?: FormInstance) {
       <h1 class="login-title">Se connecter</h1>
 
       <div class="login-form">
-        <el-form
-          ref="form"
-          :model="loginModel"
-          :rules="loginFormRules"
-          label-position="top"
-          class="login-form"
-          @submit.prevent=""
-        >
+        <el-form ref="form" :model="loginModel" :rules="loginFormRules" label-position="top" class="login-form"
+          @submit.prevent="">
           <el-form-item label="Pseudo" prop="username"> </el-form-item>
 
           <el-form-item label="Mot de passe" prop="password"> </el-form-item>
