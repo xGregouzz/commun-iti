@@ -74,7 +74,7 @@ async function onSubmit(form?: FormInstance) {
       <h1 class="register-title">Créer un compte</h1>
       <div class="register-form">
         <el-form ref="form" :model="registerModel" :rules="registerFormRules" label-position="top" class="register-form"
-          @submit.prevent="onSubmit($refs.form)">
+          @submit.prevent="onSubmit($refs.form as FormInstance)">
           <el-form-item label="Pseudo" prop="username">
             <el-input v-model="registerModel.username" />
           </el-form-item>
@@ -83,7 +83,7 @@ async function onSubmit(form?: FormInstance) {
             <el-input v-model="registerModel.password" />
           </el-form-item>
 
-          <el-form-item label="Confirmez votre mot de passe" prop="passwordConfirmation">
+          <el-form-item el-form-itemlabel=" Confirmez votre mot de passe" prop="passwordConfirmation">
             <el-input v-model="registerModel.passwordConfirmation" />
           </el-form-item>
 

@@ -18,10 +18,17 @@ const userNameRegex = /^(\w+)$/i;
 
 const loginFormRules = reactive<FormRules>({
   username: [
-
+    {
+      required: true,
+      message: "Pseudo obligatoire",
+      pattern: userNameRegex
+    }
   ],
   password: [
-
+    {
+      required: true,
+      message: "Mot de passe obligatoire",
+    }
   ]
 });
 
@@ -36,6 +43,23 @@ async function onSubmit(form?: FormInstance) {
   } catch (e) {
     return;
   }
+
+  if (await authService.authenticate(loginModel)) {
+    router.push("/app")
+    ElMessage({
+      showClose: true,
+      message: 'Connexion réussie',
+      type: 'success',
+      duration: 2000
+    })
+    return;
+  }
+  ElMessage({
+    showClose: true,
+    message: 'Pseudo ou mot de passe incorrect',
+    type: 'error',
+    duration: 2000
+  })
 }
 </script>
 <template>
@@ -45,10 +69,13 @@ async function onSubmit(form?: FormInstance) {
 
       <div class="login-form">
         <el-form ref="form" :model="loginModel" :rules="loginFormRules" label-position="top" class="login-form"
-          @submit.prevent="">
-          <el-form-item label="Pseudo" prop="username"> </el-form-item>
-
-          <el-form-item label="Mot de passe" prop="password"> </el-form-item>
+          @submit.prevent="onSubmit($refs.form as FormInstance)">
+          <el-form-item label="Pseudo" prop="username">
+            <el-input v-model="loginModel.username" />
+          </el-form-item>
+          <el-form-item label="Mot de passe" prop="password">
+            <el-input v-model="loginModel.password" type="password" />
+          </el-form-item>
 
           <el-form-item>
             <div class="form-actions">
