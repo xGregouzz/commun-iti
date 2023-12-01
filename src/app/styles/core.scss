@@ -1,0 +1,47 @@
+@use "mixins";
+@use "var";
+@use "sass:map";
+
+/**
+ * Fit the device width and height 
+ */
+.full-wh {
+  @include mixins.full-wh();
+}
+
+.full-h {
+  @include mixins.full-h();
+}
+
+.full-w {
+  @include mixins.full-w();
+}
+
+/**
+ * Fit the parent width and height 
+ */
+.stretch-wh {
+  @include mixins.stretch-wh();
+}
+
+.center-children {
+  @include mixins.flex-wh-centered();
+}
+
+@each $size, $w in var.$widths {
+  .width-#{$size} {
+    width: $w;
+  }
+}
+
+.background-image {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.form-actions {
+  display: flex;
+  gap: map-get(var.$spaces, "xs");
+  justify-content: end;
+}

@@ -1,0 +1,11 @@
+import { Container } from "inversify";
+import { RoomStore } from "./store";
+import { LocalRoomAPI } from "./platform/local/LocalRoomAPI";
+import { RoomAPI } from "./services/RoomAPI";
+import { RoomService } from "./services/RoomService";
+
+export function configureRoomContainer(container: Container) {
+  container.bind(RoomStore).toSelf().inSingletonScope();
+  container.bind(RoomService).toSelf().inSingletonScope();
+  container.bind(RoomAPI).to(LocalRoomAPI).inSingletonScope();
+}

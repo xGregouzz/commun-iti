@@ -1,0 +1,30 @@
+@use "var";
+@use "sass:map";
+
+@mixin full-h {
+  height: 100vh;
+}
+
+@mixin full-w {
+  width: 100vw;
+}
+
+@mixin full-wh {
+  @include full-h();
+  @include full-w();
+}
+
+@mixin stretch-wh {
+  height: 100%;
+  width: 100%;
+}
+
+@mixin flex-wh-centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin mWidth() {
+  width: map.get($widths, "m");
+}

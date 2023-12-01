@@ -1,0 +1,1 @@
+import{_ as e,o as a,c as r,R as i}from"./chunks/framework.LBXiIpgL.js";const g=JSON.parse('{"title":"Sign Up","description":"","frontmatter":{},"headers":[],"relativePath":"signup.md","filePath":"signup.md"}'),t={name:"signup.md"},o=i("",14),l=[o];function s(n,d,c,u,p,m){return a(),r("div",null,l)}const f=e(t,[["render",s]]);export{g as __pageData,f as default};

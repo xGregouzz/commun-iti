@@ -1,0 +1,39 @@
+@use "sass:color";
+
+$spaces: (
+  "4xs": 4px,
+  "3xs": 6px,
+  "2xs": 8px,
+  "xs": 15px,
+  "s": 20px,
+  "m": 30px,
+  "l": 40px,
+  "xl": 50px
+);
+$widths: (
+  "s": 450px,
+  "m": 650px
+);
+
+$color-primary: #36a9e1;
+$color-primary-dark: color.scale($color-primary, $lightness: -40%);
+$color-primary-darker: color.scale($color-primary, $lightness: -70%);
+$color-primary-light: color.scale($color-primary, $lightness: 40%);
+$color-primary-lighter: color.scale($color-primary, $lightness: 70%);
+
+$color-secondary: #f59e00;
+$color-secondary-dark: color.scale($color-secondary, $lightness: -40%);
+$color-secondary-darker: color.scale($color-secondary, $lightness: -70%);
+$color-secondary-light: color.scale($color-secondary, $lightness: 40%);
+$color-secondary-lighter: color.scale($color-secondary, $lightness: 70%);
+
+$color-light-gray: #eee;
+$color-lighter-gray: #fafafa;
+
+$color-light: rgba(255, 255, 255, 0.15);
+$color-lighter: rgba(255, 255, 255, 0.7);
+
+$layout-left-menu-width: 220px;
+$layout-right-menu-width: $layout-left-menu-width;
+$layout-top-menu-height: 50px;
+$layout-footer-height: 80px;
