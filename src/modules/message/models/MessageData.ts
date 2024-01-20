@@ -1,6 +1,5 @@
 import type { User } from "@/modules/user/models/domain/User";
-import type { RichText } from "./domain";
-import type { EmojiReaction } from "./domain/MessageBase";
+import type { EmojiReaction, RichText } from "./domain";
 
 export interface MessageData {
   id: string;

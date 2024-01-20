@@ -21,4 +21,3 @@ const roomState = useState(RoomStore);
   background-color: var.$color-light-gray;
 }
 </style>
-

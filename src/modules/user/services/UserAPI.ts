@@ -1,5 +1,6 @@
 import { injectable } from "inversify";
 import type { UserRegistrationModel } from "../models";
+import type { UpdateUserModel } from "../models";
 import type { User } from "../models/domain/User";
 
 @injectable()
@@ -15,4 +16,8 @@ export abstract class UserAPI {
    * @param userName 
    */
   abstract exists(userName: string): Promise<boolean>;
+
+  abstract update(user: UpdateUserModel): Promise<void>;
+
+  abstract getUserInfo(): Promise<User>;
 }

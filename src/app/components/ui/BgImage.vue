@@ -4,7 +4,6 @@ import { computed } from "vue";
 const props = defineProps({
   src: {
     type: String,
-    required: true
   },
   shape: {
     type: String,
@@ -22,6 +21,10 @@ const classes = computed(() => [`background-image-${props.shape}`]);
   </div>
 </template>
 <style lang="scss" scoped>
+.background-image {
+  flex-shrink: 0;
+  background-color: gray;
+}
 .background-image-circle {
   border-radius: 50%;
 }

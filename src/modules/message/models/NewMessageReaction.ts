@@ -1,4 +1,4 @@
-export interface NewMessageReaction {
+export interface MessageReactionParams {
   messageId: string;
   emoji: string;
 }

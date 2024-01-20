@@ -13,7 +13,7 @@ export class RoomStore extends Store<RoomState> {
         rooms: [],
         roomsPagination: {
           page: -1,
-          perPage: 20,
+          perPage: 100,
           total: 0
         }
       })
@@ -30,6 +30,13 @@ export class RoomStore extends Store<RoomState> {
   appendRoom(...room: Room[]) {
     this._state.mutate((s) => {
       s.rooms.push(...room);
+      return s;
+    });
+  }
+
+  setRooms(rooms: Room[]) {
+    this._state.mutate((s) => {
+      s.rooms = [...rooms];
       return s;
     });
   }

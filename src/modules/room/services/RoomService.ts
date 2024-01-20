@@ -3,6 +3,7 @@ import { RoomAPI } from "./RoomAPI";
 import { RoomStore } from "../store";
 import type { NewRoom } from "../models/NewRoom";
 import type { Room } from "../models/domain/Room";
+import type { PaginatedQuery } from "@/modules/infrastructure/models";
 
 @injectable()
 export class RoomService {
@@ -29,6 +30,34 @@ export class RoomService {
     });
 
     this.store.appendRoom(...paginatedData.data);
+
+    this.store.setRoomPagination({
+      page: paginatedData.page,
+      perPage: paginatedData.perPage,
+      total: paginatedData.total
+    });
+  }
+
+  async reloadRooms() {
+    const roomsPagination = this.store.state.roomsPagination;
+
+    await this.fetch(
+      {
+        page: 0,
+        perPage: roomsPagination.perPage
+      },
+      false
+    );
+  }
+
+  private async fetch(pagination: PaginatedQuery, append: boolean) {
+    const paginatedData = await this.api.fetch(pagination);
+
+    if (append) {
+      this.store.appendRoom(...paginatedData.data);
+    } else {
+      this.store.setRooms(paginatedData.data);
+    }
 
     this.store.setRoomPagination({
       page: paginatedData.page,
