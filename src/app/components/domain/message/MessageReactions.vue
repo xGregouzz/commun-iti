@@ -18,6 +18,9 @@ const emit = defineEmits<{
 
 const [authStore] = useProvider([AuthenticationStore]);
 
+/**
+ * Reactions data
+ */
 const messageReactions = computed<MessageReaction[]>(() => {
   const user = authStore.state.loggedUser;
   if (user) {

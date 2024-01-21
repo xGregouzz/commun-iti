@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o,R as a}from"./chunks/framework.LBXiIpgL.js";const f=JSON.parse(`{"title":"Edition d'un utilisateur","description":"","frontmatter":{},"headers":[],"relativePath":"user.md","filePath":"user.md"}`),i={name:"user.md"},r=a("",3),l=[r];function n(d,s,u,c,m,p){return t(),o("div",null,l)}const h=e(i,[["render",n]]);export{f as __pageData,h as default};

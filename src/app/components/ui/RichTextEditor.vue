@@ -6,6 +6,9 @@ import type { RichText, RichTextToken } from "@/modules/message/models/domain";
 
 const ENTER_KEY_CODE = 13;
 
+/**
+ * Emit "input" event every time the user press "Enter"
+ */
 const emit = defineEmits<{
   input: [text: RichText];
 }>();

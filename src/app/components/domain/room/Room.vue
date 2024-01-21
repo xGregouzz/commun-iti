@@ -40,7 +40,7 @@ watch(
   () => props.room,
   async () => {
     /**
-     * Each time the room changes, fetch messages and subscribe to new messages from that room
+     * Each time the room changes, fetch messages and subscribe to new messages
      */
     
     store.reset();
