@@ -11,7 +11,8 @@ import MessageInput from "@/app/components/domain/message/MessageInput.vue";
 
     <main>
       <main>
-        <!-- TODO -->
+        <router-view>
+        </router-view>
       </main>
 
       <footer>
@@ -28,22 +29,22 @@ import MessageInput from "@/app/components/domain/message/MessageInput.vue";
 .app-layout {
   display: flex;
 
-  > aside {
+  >aside {
     width: var.$layout-left-menu-width;
     height: 100%;
     background-color: var.$color-primary-darker;
   }
 
-  > main {
+  >main {
     flex: 1;
     display: flex;
     flex-direction: column;
 
-    > main {
+    >main {
       flex: 1;
     }
 
-    > footer {
+    >footer {
       height: var.$layout-footer-height;
     }
   }

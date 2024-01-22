@@ -14,7 +14,7 @@ const loading = ref(false);
 const router = useRouter();
 
 const formRules = reactive<FormRules>({
-  
+
 });
 
 const { isVisible, hide, show, formModel } = useFormModal(
@@ -33,7 +33,7 @@ async function onSubmit(form?: FormInstance) {
     loading.value = true;
     await form.validate();
 
-    
+
   } catch (e) {
     return;
   } finally {
@@ -49,23 +49,17 @@ defineExpose({
 
 <template>
   <el-dialog v-model="isVisible" title="Création d'un nouveau salon" width="30%">
-    <el-form
-      ref="form"
-      :model="formModel"
-      :rules="formRules"
-      label-position="top"
-      class="login-form"
-      @submit.prevent="onSubmit(form!)"
-    >
+    <el-form ref="form" :model="formModel" :rules="formRules" label-position="top" class="login-form"
+      @submit.prevent="onSubmit(form!)">
       <el-form-item label="Nom du salon" prop="name">
-     
+
       </el-form-item>
     </el-form>
 
     <template #footer>
       <div class="form-actions">
         <el-button native-type="reset" @click="hide()">Annuler</el-button>
-        
+
         <el-button type="primary" native-type="submit" :loading="loading" @click="onSubmit(form!)">
           Créer le salon
         </el-button>

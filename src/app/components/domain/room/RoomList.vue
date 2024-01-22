@@ -2,6 +2,8 @@
 import { RoomStore } from "@/modules/room/store";
 import { useState, useStore } from "@/app/platform";
 import type { Room } from "@/modules/room/models/domain/Room";
+import router from "@/app/router";
+import { RouterLink } from "vue-router";
 const state = useState(RoomStore);
 const store = useStore(RoomStore);
 
@@ -12,7 +14,11 @@ function selectRoom(room: Room) {
 
 <template>
   <nav class="room-list">
-    
+    <ul v-for="room in state.rooms" :key="room.id">
+      <li>
+        <router-link :to="{ path: `/app/room/${room.id}` }" @click="selectRoom(room)">{{ room.name }}</router-link>
+      </li>
+    </ul>
   </nav>
 </template>
 
@@ -22,12 +28,13 @@ function selectRoom(room: Room) {
 
 .room-list {
   padding-top: 1px;
-  > ul {
+
+  >ul {
     margin: 0;
     list-style-type: none;
     padding-inline: 0;
 
-    > li {
+    >li {
       margin: 0;
       text-decoration: none;
       display: block;
