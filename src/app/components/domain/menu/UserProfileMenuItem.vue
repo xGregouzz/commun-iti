@@ -1,15 +1,13 @@
 <script lang="ts" setup>
 import BgImage from "@/app/components/ui/BgImage.vue";
 import { ElMessageBox } from "element-plus";
-import { Edit, Bell, SwitchButton } from "@element-plus/icons-vue";
-import { useRightMenuState } from "./useRightMenu";
+import { SwitchButton } from "@element-plus/icons-vue";
 import { AuthenticationStore } from "@/modules/authentication/store/AuthenticationStore";
 import { useProvider, useState } from "@/app/platform";
 import { AuthenticationService } from "@/modules/authentication/services";
 
 const state = useState(AuthenticationStore);
 const [authService] = useProvider([AuthenticationService]);
-const { show: showRightMenu } = useRightMenuState();
 
 function logout() {
   ElMessageBox.confirm("Souhaitez-vous vous déconnecter de la session actuelle ?", "Warning", {
@@ -28,18 +26,15 @@ function logout() {
 <template>
   <div class="user-profile-menu-item">
     <div class="user-profile-info">
-      <bg-image
-        class="user-profile-info-picture"
-        :src="state.loggedUser?.pictureUrl!"
-      />
+      <bg-image class="user-profile-info-picture" :src="state.loggedUser?.pictureUrl!" />
 
       <div class="user-profile-info-username">{{ state.loggedUser?.username }}</div>
     </div>
 
     <div class="user-profile-actions">
       <el-button :icon="SwitchButton" type="danger" size="default" @click="logout()" />
+      
     </div>
-
   </div>
 </template>
 

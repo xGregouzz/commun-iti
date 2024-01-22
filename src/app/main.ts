@@ -14,17 +14,32 @@ import { configureRoomContainer } from "@/modules/room/config";
 import { configureUserContainer } from "@/modules/user/config";
 import { configureAuthenticationContainer } from "@/modules/authentication/config";
 import { setupAuthentication } from "@/modules/authentication/setup";
+import { configureInfrastructureContainer } from "@/modules/infrastructure/config";
+import { DEFAULT_HTTP } from "./config/http";
+import { APP_CONFIG } from "./config/env";
 
-configureMessageContainer(rootContainer);
-configureRoomContainer(rootContainer);
-configureUserContainer(rootContainer);
-configureAuthenticationContainer(rootContainer);
+configureMessageContainer(rootContainer, {
+  http: DEFAULT_HTTP
+});
+configureRoomContainer(rootContainer, {
+  http: DEFAULT_HTTP
+});
+configureUserContainer(rootContainer, {
+  http: DEFAULT_HTTP
+});
+configureAuthenticationContainer(rootContainer, {
+  http: DEFAULT_HTTP
+});
+configureInfrastructureContainer(rootContainer, {
+  serverUrl: APP_CONFIG.serverUrl,
+  http: DEFAULT_HTTP
+});
 
-setupAuthentication(rootContainer);
+setupAuthentication(rootContainer, DEFAULT_HTTP).then(() => {
+  const app = createApp(App);
 
-const app = createApp(App);
+  app.use(router);
+  app.use(ElementPlus, { size: "large" });
 
-app.use(router);
-app.use(ElementPlus, { size: "large" });
-
-app.mount("#app");
+  app.mount("#app");
+});

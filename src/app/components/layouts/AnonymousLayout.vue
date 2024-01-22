@@ -3,6 +3,7 @@
     <aside>
       <h1>Commun <span>Iti</span></h1>
     </aside>
+    
     <main>
       <router-view> </router-view>
     </main>

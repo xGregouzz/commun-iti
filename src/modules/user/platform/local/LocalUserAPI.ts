@@ -1,11 +1,12 @@
 import { TypedLocalStorage } from "@/modules/infrastructure/storage";
-import type { UserRegistrationModel } from "../../models";
+import type { UpdateUserModel, UserRegistrationModel } from "../../models";
 import type { User } from "../../models/domain/User";
 import { UserAPI } from "../../services/UserAPI";
 import { v4 } from "uuid";
 import { RoomAPI } from "@/modules/room/services";
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 import { LocalRoomAPI } from "@/modules/room/platform/local/LocalRoomAPI";
+import { AuthenticationStorage } from "@/modules/authentication/services";
 
 export interface UserData extends UserRegistrationModel {
   id: string;
@@ -16,6 +17,7 @@ export interface UserStorageData {
   users: UserData[];
 }
 
+@injectable()
 export class LocalUserAPI extends UserAPI {
   static STORAGE_KEY = "iti.users";
 
@@ -24,6 +26,7 @@ export class LocalUserAPI extends UserAPI {
   });
 
   @inject(RoomAPI) roomApi!: LocalRoomAPI;
+  @inject(AuthenticationStorage) authStorage!: AuthenticationStorage;
 
   async register(user: UserRegistrationModel): Promise<User> {
     const usernameExists = await this.exists(user.username);
@@ -67,5 +70,14 @@ export class LocalUserAPI extends UserAPI {
       .getValue()
       .users.find((u) => u.username.toLowerCase() === userName.toLowerCase());
     return !!user;
+  }
+
+  update(user: UpdateUserModel): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+
+  async getUserInfo(): Promise<User> {
+    const user = this.authStorage.getValue();
+    return user?.loggedUser as User;
   }
 }

@@ -1,17 +1,17 @@
 import { injectable } from "inversify";
-import { AuthenticationAPI } from "../../services/AuthenticationAPI";
-import type { User } from "@/modules/user/models/domain/User";
+import { AuthenticationAPI, type AuthenticationResult } from "../../services/AuthenticationAPI";
 import type { LoginModel } from "../../models/LoginModel";
 import { TypedLocalStorage } from "@/modules/infrastructure/storage";
 import { LocalUserAPI, type UserStorageData } from "@/modules/user/platform/local/LocalUserAPI";
 
 @injectable()
 export class LocalStorageAuthenticationAPI extends AuthenticationAPI {
+  
   private storage = new TypedLocalStorage<UserStorageData>(LocalUserAPI.STORAGE_KEY, {
     users: []
   });
 
-  async login(login: LoginModel): Promise<User | null> {
+  async login(login: LoginModel): Promise<AuthenticationResult | null> {
     const data = this.storage.getValue();
     const user = data.users.find(
       (u) =>
@@ -22,7 +22,13 @@ export class LocalStorageAuthenticationAPI extends AuthenticationAPI {
       return null;
     }
 
-    return user;
+    return {
+      user,
+      token: {
+        bearer: "",
+        expiresAt: new Date()
+      }
+    };
   }
 
   async logout(): Promise<void> {}

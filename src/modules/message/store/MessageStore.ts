@@ -43,41 +43,60 @@ export class MessageStore extends Store<MessageState> {
     });
   }
 
-  setMessageReaction(message: Message, emoji: string) {
+  setUserReaction(messageId: string, emoji: string, userId: string) {
     this._state.mutate((s) => {
+      const message = s.currentRoomMessages.find((msg) => msg.id === messageId);
+      if (!message) {
+        return s;
+      }
+
       let emojiReaction = message.reactions.find((e) => e.emoji === emoji);
 
       if (!emojiReaction) {
         emojiReaction = {
           emoji,
-          userReacted: true,
-          reactionCount: 0
+          userReactions: []
         };
 
         message.reactions.push(emojiReaction);
       }
 
-      emojiReaction.userReacted = true;
-      emojiReaction.reactionCount++;
+      emojiReaction.userReactions.push({ userId });
 
       return s;
     });
   }
 
-  removeMessageReaction(message: Message, emoji: string) {
+  removeMessageReaction(messageId: string, emoji: string, userId: string) {
     this._state.mutate((s) => {
+      const message = s.currentRoomMessages.find((msg) => msg.id === messageId);
+      console.log(message);
+      if (!message) {
+        return s;
+      }
+
       const idx = message.reactions.findIndex((e) => e.emoji === emoji);
 
       if (idx > -1) {
         const emojiReaction = message.reactions[idx];
 
-        emojiReaction.userReacted = false;
-        emojiReaction.reactionCount--;
+        const userReactionIdx = emojiReaction.userReactions.findIndex((u) => u.userId === userId);
 
-        if (emojiReaction.reactionCount === 0) {
+        if (userReactionIdx > -1) {
+          emojiReaction.userReactions.splice(userReactionIdx, 1);
+        }
+
+        if (emojiReaction.userReactions.length === 0) {
           message.reactions.splice(idx, 1);
         }
       }
+      return s;
+    });
+  }
+
+  setMessages(messages: Message[]) {
+    this._state.mutate((s) => {
+      s.currentRoomMessages = [...messages];
 
       return s;
     });

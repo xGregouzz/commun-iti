@@ -1,19 +1,23 @@
 <script lang="ts" setup>
 import RichText from "@/app/components/ui/RichText.vue";
-import MessageReactions from "./MessageReactions.vue";
 import BgImage from "../../ui/BgImage.vue";
 import ItiEmojiPicker from "../../ui/emoji-picker/EmojiPicker.vue";
 import EmojiIcon from "../../ui/icons/EmojiIcon.vue";
+import MessageAttachements from "./MessageAttachements.vue";
 import { useProvider } from "@/app/platform";
 import { MessageService } from "@/modules/message/services/MessageService";
-import { type EmojiReaction, type Message } from "@/modules/message/models/domain";
 import { DateTime } from "luxon";
+import MessageReactions, { type MessageReaction } from "./MessageReactions.vue";
+import { type Message } from "@/modules/message/models/domain";
 
 const props = defineProps<{
   message: Message;
 }>();
 
 const [messageSerivce] = useProvider([MessageService]);
+
+function onEmojiPicked(emoji: string) {
+}
 
 </script>
 
@@ -83,4 +87,3 @@ const [messageSerivce] = useProvider([MessageService]);
   }
 }
 </style>
-@/modules/message/models/domain

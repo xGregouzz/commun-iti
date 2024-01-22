@@ -1,6 +1,6 @@
 export type StateMutation<T> = (current: T) => T;
 
-export abstract class MutableState<T extends object> {
+export abstract class MutableState<T> {
   protected _defaultValue: T;
 
   abstract get value(): T;

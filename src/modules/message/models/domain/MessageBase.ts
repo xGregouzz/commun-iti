@@ -12,8 +12,9 @@ export interface MessageBase<T> {
 
 export interface EmojiReaction {
   emoji: string;
-  userReacted: boolean;
-  reactionCount: number;
+  userReactions: {
+    userId: string;
+  }[];
 }
 
 export interface RichText {

@@ -45,3 +45,11 @@
   gap: map-get(var.$spaces, "xs");
   justify-content: end;
 }
+
+
+.light-card {
+  background-color: var.$color-light-gray;
+  overflow: hidden;
+  border-radius: 5px;
+  padding: map-get(var.$spaces, "2xs" );
+}

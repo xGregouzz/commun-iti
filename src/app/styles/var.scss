@@ -27,6 +27,9 @@ $color-secondary-darker: color.scale($color-secondary, $lightness: -70%);
 $color-secondary-light: color.scale($color-secondary, $lightness: 40%);
 $color-secondary-lighter: color.scale($color-secondary, $lightness: 70%);
 
+$color-dark-gray: #666;
+$color-darker-gray: #333;
+
 $color-light-gray: #eee;
 $color-lighter-gray: #fafafa;
 

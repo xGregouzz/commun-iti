@@ -160,4 +160,3 @@ onMounted(() => {
   height: unset;
 }
 </style>
-@/modules/message/models/domain
