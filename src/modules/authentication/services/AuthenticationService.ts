@@ -43,6 +43,7 @@ export class AuthenticationService {
    */
   async logout() {
     this.store.removeUser();
+    localStorage.removeItem("lastRoomId")
   }
 
   async refreshUserInfo() {

@@ -39,7 +39,7 @@ async function onSubmit(form?: FormInstance) {
     loading.value = true;
     await form.validate();
     const roomId = formModel.value.roomId
-    roomApi.join(roomId)
+    roomService.join(roomId)
     hide();
     location.reload()
   } catch (e) {

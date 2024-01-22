@@ -9,15 +9,15 @@ const store = useStore(RoomStore);
 
 function selectRoom(room: Room) {
   store.setCurrentRoom(room);
-  localStorage.setItem("currentRoomId", room.id)
+  localStorage.setItem("lastRoomId", room.id)
 }
 
 if (!state.currentRoom && state.rooms.length > 0) {
   router.push(`/app/room/${state.rooms[0].id}`)
 } else {
-  if (localStorage.getItem('currentRoomId')) {
-    const currentRoomId = localStorage.getItem('currentRoomId');
-    router.push(`/app/room/${currentRoomId}`);
+  if (localStorage.getItem('lastRoomId')) {
+    const lastRoomId = localStorage.getItem('lastRoomId');
+    router.push(`/app/room/${lastRoomId}`);
   }
 }
 </script>

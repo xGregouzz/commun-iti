@@ -33,7 +33,7 @@ async function onSubmit(form?: FormInstance) {
     loading.value = true;
     await form.validate();
     if (!(await roomApi.exists(formModel.value.name))) {
-      roomApi.create({ name: formModel.value.name });
+      roomService.create({ name: formModel.value.name });
     } else {
       ElMessage({
         showClose: true,
@@ -44,7 +44,6 @@ async function onSubmit(form?: FormInstance) {
       return;
     }
     hide()
-    location.reload()
   } catch (e) {
     return;
   } finally {

@@ -3,6 +3,7 @@ import { MessageService } from "@/modules/message/services/MessageService";
 import { useProvider, useState } from "@/app/platform";
 import { RoomStore } from "@/modules/room/store";
 import type { RichText } from "@/modules/message/models/domain";
+import RichTextEditor from "../../ui/RichTextEditor.vue";
 
 const [messageService] = useProvider([MessageService]);
 const roomState = useState(RoomStore);
@@ -10,7 +11,7 @@ const roomState = useState(RoomStore);
 </script>
 <template>
   <div class="message-input stretch-wh">
-    
+    <RichTextEditor></RichTextEditor>
   </div>
 </template>
 <style lang="scss" scoped>
