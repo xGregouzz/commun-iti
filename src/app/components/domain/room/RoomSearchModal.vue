@@ -38,8 +38,10 @@ async function onSubmit(form?: FormInstance) {
   try {
     loading.value = true;
     await form.validate();
-
+    const roomId = formModel.value.roomId
+    roomApi.join(roomId)
     hide();
+    location.reload()
   } catch (e) {
     return;
   } finally {
@@ -53,7 +55,7 @@ async function onSubmit(form?: FormInstance) {
  * @param text 
  */
 async function searchRooms(text: string) {
- 
+  foundRooms.value = await roomApi.search(text)
 }
 
 defineExpose({
@@ -64,30 +66,11 @@ defineExpose({
 
 <template>
   <el-dialog v-model="isVisible" title="Rejoindre un salon" width="30%">
-    <el-form
-      ref="form"
-      :model="formModel"
-      :rules="formRules"
-      label-position="top"
-      @submit.prevent="onSubmit(form!)"
-    >
+    <el-form ref="form" :model="formModel" :rules="formRules" label-position="top" @submit.prevent="onSubmit(form!)">
       <el-form-item label="Rechercher un salon" prop="roomId">
-        <el-select
-          class="search-input"
-          v-model="formModel.roomId"
-          filterable
-          remote
-          reserve-keyword
-          placeholder="Tapez le nom du salon"
-          :remote-method="searchRooms"
-          :loading="loading"
-        >
-          <el-option
-            v-for="item in foundRooms"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
-          />
+        <el-select class="search-input" v-model="formModel.roomId" filterable remote reserve-keyword
+          placeholder="Tapez le nom du salon" :remote-method="searchRooms" :loading="loading">
+          <el-option v-for="item in foundRooms" :key="item.id" :label="item.name" :value="item.id" />
         </el-select>
       </el-form-item>
     </el-form>

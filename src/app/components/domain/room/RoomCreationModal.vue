@@ -32,8 +32,19 @@ async function onSubmit(form?: FormInstance) {
   try {
     loading.value = true;
     await form.validate();
-
-
+    if (!(await roomApi.exists(formModel.value.name))) {
+      roomApi.create({ name: formModel.value.name });
+    } else {
+      ElMessage({
+        showClose: true,
+        message: 'Cette room existe déjà',
+        type: 'error',
+        duration: 2000
+      })
+      return;
+    }
+    hide()
+    location.reload()
   } catch (e) {
     return;
   } finally {
@@ -52,14 +63,13 @@ defineExpose({
     <el-form ref="form" :model="formModel" :rules="formRules" label-position="top" class="login-form"
       @submit.prevent="onSubmit(form!)">
       <el-form-item label="Nom du salon" prop="name">
-
+        <el-input v-model="formModel.name" />
       </el-form-item>
     </el-form>
 
     <template #footer>
       <div class="form-actions">
         <el-button native-type="reset" @click="hide()">Annuler</el-button>
-
         <el-button type="primary" native-type="submit" :loading="loading" @click="onSubmit(form!)">
           Créer le salon
         </el-button>

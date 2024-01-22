@@ -39,7 +39,6 @@ async function onSubmit(form?: FormInstance) {
 
   try {
     await form.validate();
-
   } catch (e) {
     return;
   }

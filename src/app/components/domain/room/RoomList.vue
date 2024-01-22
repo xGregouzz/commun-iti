@@ -9,13 +9,23 @@ const store = useStore(RoomStore);
 
 function selectRoom(room: Room) {
   store.setCurrentRoom(room);
+  localStorage.setItem("currentRoomId", room.id)
+}
+
+if (!state.currentRoom && state.rooms.length > 0) {
+  router.push(`/app/room/${state.rooms[0].id}`)
+} else {
+  if (localStorage.getItem('currentRoomId')) {
+    const currentRoomId = localStorage.getItem('currentRoomId');
+    router.push(`/app/room/${currentRoomId}`);
+  }
 }
 </script>
 
 <template>
   <nav class="room-list">
-    <ul v-for="room in state.rooms" :key="room.id">
-      <li>
+    <ul>
+      <li v-for="room in state.rooms" :key="room.id">
         <router-link :to="{ path: `/app/room/${room.id}` }" @click="selectRoom(room)">{{ room.name }}</router-link>
       </li>
     </ul>

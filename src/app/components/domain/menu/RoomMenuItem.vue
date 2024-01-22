@@ -4,7 +4,7 @@ import { useProvider, useState } from "@/app/platform";
 import { RoomService } from "@/modules/room/services/RoomService";
 import { RoomStore } from "@/modules/room/store";
 import { Plus, Search } from "@element-plus/icons-vue";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 import RoomCreationModal from "../room/RoomCreationModal.vue";
 
 const state = useState(RoomStore);
