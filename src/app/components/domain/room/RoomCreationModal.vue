@@ -34,6 +34,7 @@ async function onSubmit(form?: FormInstance) {
     await form.validate();
     if (!(await roomApi.exists(formModel.value.name))) {
       roomService.create({ name: formModel.value.name });
+      roomService.reloadRooms();
     } else {
       ElMessage({
         showClose: true,
@@ -43,11 +44,17 @@ async function onSubmit(form?: FormInstance) {
       })
       return;
     }
-    hide()
   } catch (e) {
+    ElMessage({
+      showClose: true,
+      message: 'Erreur lors de la création du salon',
+      type: 'error',
+      duration: 2000
+    })
     return;
   } finally {
     loading.value = false;
+    hide();
   }
 }
 

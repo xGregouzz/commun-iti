@@ -1,13 +1,26 @@
 <script lang="ts" setup>
+import { ref } from "vue";
 import BgImage from "@/app/components/ui/BgImage.vue";
 import { ElMessageBox } from "element-plus";
-import { SwitchButton } from "@element-plus/icons-vue";
+import { SwitchButton, Edit, Bell } from "@element-plus/icons-vue";
 import { AuthenticationStore } from "@/modules/authentication/store/AuthenticationStore";
 import { useProvider, useState } from "@/app/platform";
 import { AuthenticationService } from "@/modules/authentication/services";
+import EditUserProfileModal from "@/app/components/domain/user/EditUserProfileModal.vue";
+import { useRightMenuState } from "./useRightMenu";
 
 const state = useState(AuthenticationStore);
 const [authService] = useProvider([AuthenticationService]);
+
+const editUserProfileModalIsOpen = ref<InstanceType<typeof EditUserProfileModal>>();
+
+const openEditUserProfileModal = () => {
+  editUserProfileModalIsOpen.value?.show({
+    username: state.loggedUser ? state.loggedUser.username : "",
+    pictureUrl: state.loggedUser ? state.loggedUser.pictureUrl : "",
+    picture: null
+  });
+};
 
 function logout() {
   ElMessageBox.confirm("Souhaitez-vous vous déconnecter de la session actuelle ?", "Warning", {
@@ -19,7 +32,7 @@ function logout() {
       authService.logout();
       location.href = "/login";
     })
-    .catch(() => {});
+    .catch(() => { });
 }
 </script>
 
@@ -33,7 +46,9 @@ function logout() {
 
     <div class="user-profile-actions">
       <el-button :icon="SwitchButton" type="danger" size="default" @click="logout()" />
-      
+      <el-button :icon="Edit" size="default" @click="openEditUserProfileModal" />
+      <el-button :icon="Bell" size="default" @click="useRightMenuState()" />
+      <edit-user-profile-modal ref="editUserProfileModalIsOpen" />
     </div>
   </div>
 </template>
@@ -51,7 +66,7 @@ function logout() {
 
   gap: map-get(var.$spaces, "xs");
 
-  > .user-profile-info-picture {
+  >.user-profile-info-picture {
     $width: calc(var.$layout-top-menu-height * 2 - map-get(var.$spaces, "xs") * 2);
     height: 100%;
     width: $width;

@@ -48,8 +48,10 @@ watch(
 );
 
 function subscribeToIncomingMessage() {
-  messageSocket.onNewMessage(props.room.id, () =>
+  messageSocket.onNewMessage(props.room.id, () => {
     ElNotification({ message: "Vous avez reçu un nouveau message", type: "info" })
+    messageService.reloadMessages()
+  }
   );
 }
 
@@ -73,7 +75,7 @@ async function fetchMore() {
   <div class="room stretch-wh" ref="root">
     <div class="room-container" ref="container">
       <div ref="top"></div>
-      <Message v-for="message in state.currentRoomMessages" :key="message.id" :message="message" />
+      <message v-for="message in state.currentRoomMessages" :key="message.id" :message="message" />
     </div>
   </div>
 </template>

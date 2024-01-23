@@ -2,7 +2,7 @@
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { useFormModal } from "@/app/components/ui/modal";
-import type { FormInstance, FormRules } from "element-plus";
+import { ElNotification, type FormInstance, type FormRules } from "element-plus";
 import { useProvider } from "@/app/platform";
 import { RoomAPI } from "@/modules/room/services/RoomAPI";
 import { RoomService } from "@/modules/room/services/RoomService";
@@ -40,11 +40,18 @@ async function onSubmit(form?: FormInstance) {
     await form.validate();
     const roomId = formModel.value.roomId
     roomService.join(roomId)
-    hide();
+    roomService.reloadRooms();
   } catch (e) {
     return;
   } finally {
     loading.value = false;
+    hide();
+    ElNotification({
+      showClose: true,
+      message: 'Salon rejoint',
+      type: 'success',
+      duration: 2000
+    })
   }
 }
 
