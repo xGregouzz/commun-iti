@@ -5,5 +5,7 @@ import { HttpUserAPI } from "./platform/http/HttpUserAPI";
 import type { BaseModuleConfig } from "../infrastructure/BaseModuleConfig";
 
 export function configureUserContainer(container: Container, config: BaseModuleConfig) {
-  container.bind(UserAPI).to(LocalUserAPI);
+  // container.bind(UserAPI).to(LocalUserAPI);
+  container.bind(UserAPI).toConstantValue(new HttpUserAPI(config.http));
+
 }

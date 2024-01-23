@@ -12,6 +12,6 @@ export function configureMessageContainer(container: Container, config: BaseModu
   container.bind(MessageService).toSelf();
   container.bind(MessageDataParser).toSelf().inSingletonScope();
   container.bind(MessageStore).toSelf().inSingletonScope();
-  container.bind(MessageAPI).to(LocalStorageMessageAPI);
+  container.bind(MessageAPI).toConstantValue(new HttpMessageAPI(config.http));
   container.bind(MessageSocketService).toSelf().inSingletonScope();
 }

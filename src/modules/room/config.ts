@@ -10,6 +10,6 @@ import type { BaseModuleConfig } from "../infrastructure/BaseModuleConfig";
 export function configureRoomContainer(container: Container, config: BaseModuleConfig) {
   container.bind(RoomStore).toSelf().inSingletonScope();
   container.bind(RoomService).toSelf().inSingletonScope();
-  container.bind(RoomAPI).to(LocalRoomAPI).inSingletonScope();
+  container.bind(RoomAPI).toConstantValue(new HttpRoomAPI(config.http));
   container.bind(RoomSocketService).toSelf().inSingletonScope();
 }
