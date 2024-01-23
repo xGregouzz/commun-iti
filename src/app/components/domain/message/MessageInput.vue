@@ -8,10 +8,16 @@ import RichTextEditor from "../../ui/RichTextEditor.vue";
 const [messageService] = useProvider([MessageService]);
 const roomState = useState(RoomStore);
 
+function sendMessage(text: RichText) {
+  messageService.sendMessage({
+    text: text,
+    roomId: roomState.currentRoom!.id
+  })
+}
 </script>
 <template>
   <div class="message-input stretch-wh">
-    <RichTextEditor></RichTextEditor>
+    <RichTextEditor @input="sendMessage"></RichTextEditor>
   </div>
 </template>
 <style lang="scss" scoped>

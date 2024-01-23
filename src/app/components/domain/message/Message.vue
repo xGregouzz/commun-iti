@@ -9,12 +9,13 @@ import { MessageService } from "@/modules/message/services/MessageService";
 import { DateTime } from "luxon";
 import MessageReactions, { type MessageReaction } from "./MessageReactions.vue";
 import { type Message } from "@/modules/message/models/domain";
+import { format } from "path";
 
 const props = defineProps<{
   message: Message;
 }>();
 
-const [messageSerivce] = useProvider([MessageService]);
+const [messageService] = useProvider([MessageService]);
 
 function onEmojiPicked(emoji: string) {
 }
@@ -28,13 +29,16 @@ function onEmojiPicked(emoji: string) {
       <el-button :icon="EmojiIcon" circle size="small" @click="$refs.emojiPicker.show()" />
     </div>
 
-    <bg-image class="message-user-photo" src="" />
+    <bg-image class="message-user-photo" :src="props.message.author.pictureUrl" />
 
     <div class="message-content">
       <div class="message-title">
-        <small class="message-date"></small>
+        {{ props.message.author.username }}
+        <small class="message-date">{{
+          DateTime.fromISO(props.message.creationDate.toISOString()).setLocale('fr').toLocaleString(DateTime.DATE_FULL)
+        }}</small>
+        <rich-text :text="props.message.text"></rich-text>
       </div>
-
     </div>
   </div>
 </template>

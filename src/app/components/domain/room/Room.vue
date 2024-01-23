@@ -16,7 +16,7 @@ const state = useState(MessageStore);
 const authState = useState(AuthenticationStore);
 const store = useStore(MessageStore);
 
-const [messageSerivce, messageSocket, roomSocket] = useProvider([
+const [messageService, messageSocket, roomSocket] = useProvider([
   MessageService,
   MessageSocketService,
   RoomSocketService
@@ -38,14 +38,11 @@ subscribeToIncomingMessage();
 
 watch(
   () => props.room,
-  async () => {
-    /**
-     * Each time the room changes, fetch messages and subscribe to new messages
-     */
-    
-    store.reset();
+  async (value, oldValue) => {
+    if (value != oldValue) {
+      store.reset();
+    }
     await fetchMore();
-
     subscribeToIncomingMessage();
   }
 );
@@ -61,8 +58,7 @@ async function fetchMore() {
 
   try {
     loading.value = true;
-
-    // TODO fetch more messages
+    messageService.fetchMore(props.room.id)
   } catch (e) {
     console.error(e);
   } finally {
@@ -75,6 +71,7 @@ async function fetchMore() {
   <div class="room stretch-wh" ref="root">
     <div class="room-container" ref="container">
       <div ref="top"></div>
+      <Message v-for="message in state.currentRoomMessages" :key="message.id" :message="message" />
     </div>
   </div>
 </template>
@@ -85,6 +82,7 @@ async function fetchMore() {
   flex-direction: column-reverse;
   overflow-y: auto;
 }
+
 .room-container {
   display: flex;
   flex-direction: column-reverse;
