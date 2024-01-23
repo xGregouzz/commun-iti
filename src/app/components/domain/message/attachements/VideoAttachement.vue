@@ -9,7 +9,9 @@ defineProps({
 
 <template>
   <div class="video-attachement light-card">
-        <!-- TODO -->
+    <video controls width="250">
+      <source :src="src" type="video/webm" />
+    </video>
   </div>
 </template>
 

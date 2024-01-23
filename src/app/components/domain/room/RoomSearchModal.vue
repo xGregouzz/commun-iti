@@ -41,7 +41,6 @@ async function onSubmit(form?: FormInstance) {
     const roomId = formModel.value.roomId
     roomService.join(roomId)
     hide();
-    location.reload()
   } catch (e) {
     return;
   } finally {

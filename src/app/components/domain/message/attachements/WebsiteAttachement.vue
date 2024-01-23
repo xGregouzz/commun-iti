@@ -12,20 +12,25 @@ interface WebsiteMetadata {
 }
 
 const [ogParser] = useProvider([HtmlOgParser]);
+const data = ref<WebsiteMetadata | null>(null);
 
 const props = defineProps<{
   attachement: WebsiteMessageAttachement;
 }>();
+
+const fetchData = () =>
+  ogParser.parse(props.attachement.url).then((res) => {
+    data.value = res;
+  });
+
+fetchData();
 </script>
 <template>
   <div class="website-attachement light-card">
-    <div class="website-attachement-domain"></div>
-
-    <div class="website-attachement-title"></div>
-
-    <div class="website-attachement-description"></div>
-
-    <div class="website-attachement-image"></div>
+    <div class="website-attachement-domain">{{ data?.domain }}</div>
+    <div class="website-attachement-title">{{ data?.title }}</div>
+    <div class="website-attachement-description">{{ data?.description }}</div>
+    <div class="website-attachement-image"><img :src="data?.imageUrl" /></div>
   </div>
 </template>
 <style lang="scss" scoped>

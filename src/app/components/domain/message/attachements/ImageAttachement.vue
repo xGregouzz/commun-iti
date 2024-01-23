@@ -8,12 +8,13 @@ defineProps({
 </script>
 <template>
   <div class="image-attachement light-card">
-    <!-- TODO -->
+    <img :src="src" />
   </div>
 </template>
 <style lang="scss" scoped>
 @use "@/app/styles/var";
 @use "sass:map";
+
 .image-attachement {
   max-width: 350px;
   max-height: 400px;

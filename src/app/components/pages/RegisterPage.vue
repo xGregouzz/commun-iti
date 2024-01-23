@@ -61,7 +61,10 @@ async function onSubmit(form?: FormInstance) {
       })
       return;
     }
-    userApi.register(registerModel)
+    userApi.register({
+      username: registerModel.username,
+      password: registerModel.password,
+    })
     router.push('/login')
   } else {
     return;
