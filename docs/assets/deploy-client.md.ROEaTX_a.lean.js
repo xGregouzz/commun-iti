@@ -1,0 +1,1 @@
+import{_ as e,o as t,c as o}from"./chunks/framework.LBXiIpgL.js";const _=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"deploy-client.md","filePath":"deploy-client.md"}'),a={name:"deploy-client.md"};function n(c,r,s,l,p,d){return t(),o("div")}const m=e(a,[["render",n]]);export{_ as __pageData,m as default};
