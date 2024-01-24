@@ -4,15 +4,18 @@ import BgImage from "../../ui/BgImage.vue";
 import ItiEmojiPicker from "../../ui/emoji-picker/EmojiPicker.vue";
 import EmojiIcon from "../../ui/icons/EmojiIcon.vue";
 import MessageAttachements from "./MessageAttachements.vue";
-import { useProvider } from "@/app/platform";
+import { useProvider, useState } from "@/app/platform";
 import { MessageService } from "@/modules/message/services/MessageService";
 import { DateTime } from "luxon";
 import MessageReactions, { type MessageReaction } from "./MessageReactions.vue";
 import { type EmojiReaction, type Message } from "@/modules/message/models/domain";
+import { AuthenticationStore } from "@/modules/authentication/store/AuthenticationStore";
 
 const props = defineProps<{
   message: Message;
 }>();
+
+const authState = useState(AuthenticationStore);
 
 const [messageService] = useProvider([MessageService]);
 
@@ -22,8 +25,12 @@ function onEmojiPicked(emoji: string) {
   }
 }
 
-function removeEmoji(emoji: EmojiReaction) {
-  messageService.removeReaction(emoji.emoji, props.message);
+function handleReactionClick(emoji: EmojiReaction) {
+  if (emoji.userReactions.some(reaction => reaction.userId === authState.loggedUser?.id)){
+    messageService.removeReaction(emoji.emoji, props.message);
+  } else {
+    messageService.reactTo(emoji.emoji, props.message);
+  }
 }
 </script>
 
@@ -31,7 +38,7 @@ function removeEmoji(emoji: EmojiReaction) {
   <div class="message">
     <div class="message-actions">
       <iti-emoji-picker ref="emojiPicker" @pick="onEmojiPicked" />
-      <el-button :icon="EmojiIcon" circle size="small" @click="$refs.emojiPicker.show()" />
+      <el-button :icon="EmojiIcon" circle size="small" @click="($refs.emojiPicker as typeof ItiEmojiPicker).show()" />
     </div>
     <bg-image class="message-user-photo" :src="props.message.author.pictureUrl" />
     <div class="message-content">
@@ -45,7 +52,7 @@ function removeEmoji(emoji: EmojiReaction) {
         <rich-text :text="props.message.text" />
       </div>
       <message-attachements v-show="props.message.attachements.length > 0" :attachements="props.message.attachements" />
-      <message-reactions :reactions="props.message.reactions" @reactionClick="removeEmoji" />
+      <message-reactions :reactions="props.message.reactions" @reactionClick="handleReactionClick"/>
     </div>
   </div>
 </template>

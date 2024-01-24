@@ -33,9 +33,6 @@ const container = ref<HTMLDivElement | null>(null);
 // Element that have the scrollbar
 const root = ref<HTMLDivElement | null>(null);
 
-subscribeToIncomingMessage();
-
-
 watch(
   () => props.room,
   async (value, oldValue) => {
@@ -44,6 +41,9 @@ watch(
     }
     await fetchMore();
     subscribeToIncomingMessage();
+    subscribeToJoinRoom();
+    subscribeToQuitRoom();
+    subscribeToIncomingReaction();
   }
 );
 
@@ -53,6 +53,45 @@ function subscribeToIncomingMessage() {
     messageService.reloadMessages()
   }
   );
+}
+
+function subscribeToJoinRoom() {
+  roomSocket.onRoomJoined((room) => {
+    if (room.user.id !== authState.loggedUser?.id) {
+      ElNotification({
+        message: `${room.user.username} a rejoint le salon`,
+        type: "info"
+      });
+    }
+  });
+}
+
+function subscribeToQuitRoom() {
+  roomSocket.onRoomLeft((room) => {
+    if (room.user.id !== authState.loggedUser?.id) {
+      ElNotification({
+        message: `${room.user.username} a quitté le salon`,
+        type: "info"
+      });
+    }
+  });
+}
+
+function subscribeToIncomingReaction() {
+  messageSocket.onReactionRemoved(() => {
+    messageService.reloadMessages();
+  });
+  messageSocket.onNewReaction((reaction) => {
+    if (reaction.message.author.id === authState.loggedUser?.id) {
+      if (reaction.user.id !== authState.loggedUser?.id) {
+        ElNotification({
+          message: `${reaction.user.username} a réagi à votre message ${reaction.emoji}`,
+          type: "info"
+        });
+        messageService.reloadMessages();
+      }
+    }
+  });
 }
 
 async function fetchMore() {

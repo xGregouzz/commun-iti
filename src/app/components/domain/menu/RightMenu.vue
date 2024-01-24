@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { onUnmounted, watch } from "vue";
 import { useRightMenuState } from "./useRightMenu";
+import NotificationList from "../notification/NotificationList.vue";
 
 const { hide, isShown, show } = useRightMenuState();
 
@@ -27,7 +28,9 @@ defineExpose({
 </script>
 
 <template>
-  <div class="right-menu" :class="{ opened: isShown }" @click.stop=""></div>
+  <div class="right-menu" :class="{ opened: isShown }" @click.stop="">
+    <notification-list />
+  </div>
 </template>
 
 <style lang="scss" scoped>

@@ -47,7 +47,7 @@ function logout() {
     <div class="user-profile-actions">
       <el-button :icon="SwitchButton" type="danger" size="default" @click="logout()" />
       <el-button :icon="Edit" size="default" @click="openEditUserProfileModal" />
-      <el-button :icon="Bell" size="default" @click="useRightMenuState()" />
+      <el-button :icon="Bell" size="default" @click="useRightMenuState().show()" />
       <edit-user-profile-modal ref="editUserProfileModalIsOpen" />
     </div>
   </div>

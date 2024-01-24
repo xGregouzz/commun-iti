@@ -76,7 +76,7 @@ defineExpose({
       <el-form-item label="Rechercher un salon" prop="roomId">
         <el-select class="search-input" v-model="formModel.roomId" filterable remote reserve-keyword
           placeholder="Tapez le nom du salon" :remote-method="searchRooms" :loading="loading">
-          <el-option v-for="item in foundRooms" :key="item.id" :label="item.name" :value="item.id" />
+          <el-option v-for="room in foundRooms" :key="room.id" :label="room.name" :value="room.id" />
         </el-select>
       </el-form-item>
     </el-form>
