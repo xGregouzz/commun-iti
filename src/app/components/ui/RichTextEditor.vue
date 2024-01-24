@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import * as Quill from "quill";
+import Quill from "quill";
 import { ref, onMounted } from "vue";
 import type { DeltaOperation } from "quill";
 import type { RichText, RichTextToken } from "@/modules/message/models/domain";
@@ -125,25 +125,25 @@ onMounted(() => {
    * Setup Quill editor
    */
   const quillEditor = new Quill(editorElement.value!);
-
-  quillEditor.keyboard.bindings[ENTER_KEY_CODE].unshift({
+  const keyboard = quillEditor.keyboard as any;
+  keyboard.bindings[ENTER_KEY_CODE].unshift({
     key: ENTER_KEY_CODE,
     ctrlKey: false,
 
     handler: () => {
       onEnterKeyPressed(quillEditor.getContents());
-      quillEditor.setContents([]);
+      quillEditor.setContents([] as any);
       return false;
     }
   });
 
-  quillEditor.keyboard.bindings[ENTER_KEY_CODE].unshift({
+  keyboard.bindings[ENTER_KEY_CODE].unshift({
     key: ENTER_KEY_CODE,
     ctrlKey: true,
 
     handler: () => {
       quillEditor.insertText(quillEditor.getText().length, "\n");
-      quillEditor.setSelection(quillEditor.getText().length);
+      quillEditor.setSelection(0, quillEditor.getText().length);
       return true;
     }
   });

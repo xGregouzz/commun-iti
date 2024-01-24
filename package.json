@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "vite",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
+    "build": "run-p \"build-only {@}\" --",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier --write src/",
     "doc": "http-server ./docs"
